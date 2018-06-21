@@ -8,23 +8,7 @@
 </head>
 <body>
 <div id="todo-list-example">
-    <h3>{{cat_title}}</h3>
-    <form v-on:submit.prevent="addNewTodo">
-        <input
-                v-model="newTodoText"
-                id="new-todo"
-                placeholder="legg til søkfrase"
-        >
-    </form>
-    <ul>
-        <li
-                is="phrase"
-                v-for="(todo, index) in todos"
-                v-bind:key="todo.id"
-                v-bind:title="todo.title"
-                v-on:remove="todos.splice(index, 1)"
-        ></li>
-    </ul>
+    <group title="Uteliv"></group>
 </div>
 <script src="script.js"></script>
 </body>
