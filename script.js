@@ -30,6 +30,7 @@ Vue.component('group', {
     template: `
         <div>
         <h3>{{ group.title }}</h3>
+        <button v-on:click="$emit('remove')">Del</button>
         <form v-on:submit.prevent="addPhrase">
             <input v-model="newPhrase" placeholder="Ny søkefrase">
         </form>
