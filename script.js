@@ -14,9 +14,9 @@ userData = {
 };
 
 function checkUserData(data){
-    data.nextGid = data.groups.length+1;
+    data.nextID = data.groups.length+1;
     for (let i=0; i < data.groups.length; i++){
-        data.groups[i].nextPid = data.groups[i].phrases.length+1;
+        data.groups[i].nextID = data.groups[i].phrases.length+1;
     }
 }
 checkUserData(userData);
@@ -39,15 +39,16 @@ Vue.component('group', {
         <form v-on:submit.prevent="addPhrase">
             <input v-model="newPhrase" placeholder="Ny søkefrase">
         </form>
-        <ul>
+        <ul v-if="group.phrases.length">
             <li
                 is="phrase"
-                v-for="(todo, index) in group.phrases"
-                v-bind:key="todo.id"
-                v-bind:title="todo.title"
+                v-for="(phrase, index) in group.phrases"
+                v-bind:key="phrase.id"
+                v-bind:title="phrase.title"
                 v-on:remove="group.phrases.splice(index, 1)"
             ></li>
         </ul>
+        <p v-else>Ingen søkefraser definert</p>
         </div>
       `,
     data: function () {
@@ -58,7 +59,7 @@ Vue.component('group', {
     methods: {
         addPhrase: function () {
             this.group.phrases.push({
-                id: this.group.nextPid++,
+                id: this.group.nextID++,
                 title: this.newPhrase
             });
             this.newPhrase = ''
@@ -71,16 +72,16 @@ new Vue({
     el: '#groups',
     data:{
         groups: userData.groups,
-        nextGId: userData.nextGid,
+        nextID: userData.nextID,
         newGroup: ''
     },
     methods: {
         addGroup: function () {
             this.groups.push({
-                id: this.nextGId++,
+                id: this.nextID++,
                 title: this.newGroup,
                 phrases: [],
-                nextPid:1
+                nextID:1
             });
             this.newGroup = ''
         }
