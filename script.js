@@ -1,3 +1,15 @@
+groups = [
+    {
+    id:1,
+    title:'Mat',
+    phrases:[{id:1, title:'rema 1000'}, {id:2, title:'bunn'}]},
+    {
+    id:2,
+    title:'Uteliv',
+    phrases:[{id:1, title:'narvesen'}, {id:2, title:'bar'}]
+    }
+]
+
 Vue.component('phrase', {
     template: `
     <li>
@@ -22,33 +34,33 @@ Vue.component('group', {
         <ul>
             <li
                 is="phrase"
-                v-for="(todo, index) in searches"
+                v-for="(todo, index) in phrases"
                 v-bind:key="todo.id"
                 v-bind:title="todo.title"
-                v-on:remove="searches.splice(index, 1)"
+                v-on:remove="phrases.splice(index, 1)"
             ></li>
         </ul>
         </div>
       `,
     data: function () {
         return {
-            searches: [{id:1, title:'rema 1000'}, {id:2, title:'bunn'}],
             nextId: 3,
             newTodoText: ''
 
     }},
     methods: {
         addNewTodo: function () {
-            this.searches.push({
+            this.phrases.push({
                 id: this.nextId++,
                 title: this.newTodoText
             })
             this.newTodoText = ''
         }
     },
-    props:['title']
+    props:['title', 'key', 'phrases']
 })
 
 new Vue({
-    el: '#todo-list-example'
+    el: '#groups',
+    data:{groups:groups}
 })
