@@ -1,14 +1,20 @@
-groups = [
-    {
-    id:1,
-    title:'Mat',
-    phrases:[{id:1, title:'rema 1000'}, {id:2, title:'bunn'}]},
-    {
-    id:2,
-    title:'Uteliv',
-    phrases:[{id:1, title:'narvesen'}, {id:2, title:'bar'}]
-    }
-]
+userData = {
+    groups:[
+        {
+        id:1,
+        title:'Mat',
+        phrases:[{id:1, title:'rema 1000'}, {id:2, title:'bunn'}],
+        nextPid:3
+        },
+        {
+        id:2,
+        title:'Uteliv',
+        phrases:[{id:1, title:'narvesen'}, {id:2, title:'bar'}],
+        nextPid:3
+        }
+    ],
+    nextGid:3
+}
 
 Vue.component('phrase', {
     template: `
@@ -23,17 +29,17 @@ Vue.component('phrase', {
 Vue.component('group', {
     template: `
         <div>
-        <h3>{{ title }}</h3>
+        <h3>{{ group.title }}</h3>
         <form v-on:submit.prevent="addPhrase">
-            <input v-model="newPhrase">
+            <input v-model="newPhrase" placeholder="Ny søkefrase">
         </form>
         <ul>
             <li
                 is="phrase"
-                v-for="(todo, index) in phrases"
+                v-for="(todo, index) in group.phrases"
                 v-bind:key="todo.id"
                 v-bind:title="todo.title"
-                v-on:remove="phrases.splice(index, 1)"
+                v-on:remove="group.phrases.splice(index, 1)"
             ></li>
         </ul>
         </div>
@@ -46,28 +52,30 @@ Vue.component('group', {
     }},
     methods: {
         addPhrase: function () {
-            this.phrases.push({
+            this.group.phrases.push({
                 id: this.nextId++,
                 title: this.newPhrase
             })
             this.newPhrase = ''
         }
     },
-    props:['title', 'key', 'phrases']
+    props:['group']
 })
 
 new Vue({
     el: '#groups',
     data:{
-        groups: groups,
-        nextGId: 3
+        groups: userData.groups,
+        nextGId: userData.nextGid,
+        newGroup: ''
     },
     methods: {
         addGroup: function () {
             this.groups.push({
                 id: this.nextGId++,
                 title: this.newGroup,
-                phrases: []
+                phrases: [],
+                nextPid:1
             })
             this.newGroup = ''
         }
