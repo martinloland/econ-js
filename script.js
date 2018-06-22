@@ -24,12 +24,8 @@ Vue.component('group', {
     template: `
         <div>
         <h3>{{ title }}</h3>
-        <form v-on:submit.prevent="addNewTodo">
-            <input
-                    v-model="newTodoText"
-                    id="new-todo"
-                    placeholder="legg til søkfrase"
-            >
+        <form v-on:submit.prevent="addPhrase">
+            <input v-model="newPhrase">
         </form>
         <ul>
             <li
@@ -45,16 +41,16 @@ Vue.component('group', {
     data: function () {
         return {
             nextId: 3,
-            newTodoText: ''
+            newPhrase: ''
 
     }},
     methods: {
-        addNewTodo: function () {
+        addPhrase: function () {
             this.phrases.push({
                 id: this.nextId++,
-                title: this.newTodoText
+                title: this.newPhrase
             })
-            this.newTodoText = ''
+            this.newPhrase = ''
         }
     },
     props:['title', 'key', 'phrases']
@@ -62,5 +58,18 @@ Vue.component('group', {
 
 new Vue({
     el: '#groups',
-    data:{groups:groups}
+    data:{
+        groups: groups,
+        nextGId: 3
+    },
+    methods: {
+        addGroup: function () {
+            this.groups.push({
+                id: this.nextGId++,
+                title: this.newGroup,
+                phrases: []
+            })
+            this.newGroup = ''
+        }
+    },
 })

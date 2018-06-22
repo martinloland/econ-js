@@ -8,6 +8,9 @@
 </head>
 <body>
 <div id="groups">
+    <form v-on:submit.prevent="addGroup">
+        <input v-model="newGroup" placeholder="Ny kategori">
+    </form>
     <group
         v-for="group in groups"
         v-bind:title="group.title"
