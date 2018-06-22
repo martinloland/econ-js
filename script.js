@@ -4,17 +4,22 @@ userData = {
         id:1,
         title:'Mat',
         phrases:[{id:1, title:'rema 1000'}, {id:2, title:'bunn'}],
-        nextPid:3
         },
         {
         id:2,
         title:'Uteliv',
         phrases:[{id:1, title:'narvesen'}, {id:2, title:'bar'}],
-        nextPid:3
         }
-    ],
-    nextGid:3
+    ]
+};
+
+function checkUserData(data){
+    data.nextGid = data.groups.length+1;
+    for (let i=0; i < data.groups.length; i++){
+        data.groups[i].nextPid = data.groups[i].phrases.length+1;
+    }
 }
+checkUserData(userData);
 
 Vue.component('phrase', {
     template: `
@@ -24,7 +29,7 @@ Vue.component('phrase', {
     </li>
   `,
     props: ['title']
-})
+});
 
 Vue.component('group', {
     template: `
@@ -47,21 +52,20 @@ Vue.component('group', {
       `,
     data: function () {
         return {
-            nextId: 3,
             newPhrase: ''
 
     }},
     methods: {
         addPhrase: function () {
             this.group.phrases.push({
-                id: this.nextId++,
+                id: this.group.nextPid++,
                 title: this.newPhrase
-            })
+            });
             this.newPhrase = ''
         }
     },
     props:['group']
-})
+});
 
 new Vue({
     el: '#groups',
@@ -77,8 +81,8 @@ new Vue({
                 title: this.newGroup,
                 phrases: [],
                 nextPid:1
-            })
+            });
             this.newGroup = ''
         }
     },
-})
+});
